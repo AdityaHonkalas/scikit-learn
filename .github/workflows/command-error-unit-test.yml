@@ -1,0 +1,30 @@
+name: Command error unit tests
+
+permissions:
+  contents: read
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  command-error:
+    name: Induce command error
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Run invalid command
+        run: definitely-not-a-real-command --run-unit-tests
+
+      - name: Run unit tests
+        run: python -m pytest sklearn/tests/test_common.py

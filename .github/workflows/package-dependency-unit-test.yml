@@ -1,0 +1,32 @@
+name: Package dependency unit tests
+
+permissions:
+  contents: read
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  package-dependency-error:
+    name: Induce package dependency error
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install package with impossible dependency
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "requests==2.31.0" "urllib3==1.20.0"
+
+      - name: Run unit tests
+        run: python -m pytest sklearn/tests/test_common.py

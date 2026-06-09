@@ -7,7 +7,7 @@ on:
   pull_request:
   schedule:
     # Nightly build at 02:30 UTC
-    - cron: "30 2 * * *"
+    #- cron: "30 2 * * *"
   # Manual run
   workflow_dispatch:
 

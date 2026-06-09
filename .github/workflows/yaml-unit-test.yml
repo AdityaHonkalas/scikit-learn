@@ -1,0 +1,23 @@
+name: YAML unit tests
+
+permissions:
+  contents: read
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  yaml-error:
+    name: Induce YAML syntax error
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: This workflow is intentionally malformed
+        run: echo "This step is unreachable because the YAML is invalid"
+        env:
+          BROKEN_KEY: "missing closing quote
